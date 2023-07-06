@@ -1,12 +1,13 @@
 class EmployeesController < ApplicationController
+  before_action :set_employee, only: [:show, :update, :destroy]
+
   def index
     @employees = Employee.all
     render json: {employees: @employees}
   end
 
   def show
-    employee = Employee.find(params[:id])
-    render json: employee
+    render json: @employee
   end
 
   def create
@@ -19,18 +20,15 @@ class EmployeesController < ApplicationController
   end
 
   def update
-    employee = Employee.find(params[:id])
-
-    if employee.update(employee_params)
-      render json: employee
+    if @employee.update(employee_params)
+      render json: @employee
     else
-      render json: employee.errors, status: :unprocessable_entity
+      render json: @employee.errors, status: :unprocessable_entity
     end
   end
   
   def destroy 
-    employee = Employee.find(params[:id])
-    employee.destroy
+    @employee.destroy
     head :no_content
   end
 
@@ -38,5 +36,9 @@ class EmployeesController < ApplicationController
 
   def employee_params
     params.require(:employee).permit(:name, :email, :password, :dob, :qualification, :contact, :gender)
-  end  
+  end 
+
+  def set_employee
+    @employee = Employee.find(params[:id])
+  end
 end
