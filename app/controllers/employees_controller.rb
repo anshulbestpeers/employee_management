@@ -32,8 +32,14 @@ class EmployeesController < ApplicationController
     head :no_content
   end
 
+  def find_department
+    filter = params[:filter] 
+    employees = Employee.includes(:department).where(departments: { name: filter })
+    render json: employees
+  end
+  
   private
-
+  
   def employee_params
     params.require(:employee).permit(:name, :email, :password, :dob, :qualification, :contact, :gender, :department_id)
   end 
