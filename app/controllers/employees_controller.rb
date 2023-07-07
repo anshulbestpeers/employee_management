@@ -3,17 +3,17 @@ class EmployeesController < ApplicationController
 
   def index
     employees = Employee.all
-    render json: {employees: @employees}
+    render json: employees.to_json
   end
 
   def show
-    render json: @employee
+    render json: @employee.to_json
   end
 
   def create
     employee = Employee.new(employee_params)
     if employee.save
-      render json: employee, status: :created
+      render json: employee.to_json, status: :created
     else
       render json: employee.errors.messages, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class EmployeesController < ApplicationController
 
   def update
     if @employee.update(employee_params)
-      render json: @employee
+      render json: @employee.to_json
     else
       render json: @employee.errors.messages, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class EmployeesController < ApplicationController
 
   def find_department
     employees = Employee.includes(:department).where(departments: { name: params[:filter] })
-    render json: employees
+    render json: employees, each_serializer: EmployeeSerializer
   end
   
   private
