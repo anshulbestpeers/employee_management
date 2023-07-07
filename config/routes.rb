@@ -5,5 +5,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   # devise_for :employees, skip: [:registrations]
-  resources :employees
+  resources :employees do
+    collection do
+      get 'find_department'
+    end
+  end
 end

@@ -6,5 +6,4 @@ class ApplicationController < ActionController::API
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:create, keys: [:name, :email, :password, :dob])
   end
-
 end
