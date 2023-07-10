@@ -9,5 +9,6 @@ Rails.application.routes.draw do
     collection do
       get 'find_department'
     end
+    resource :personal_info
   end
 end
