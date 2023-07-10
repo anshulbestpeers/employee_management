@@ -36,14 +36,20 @@ class EmployeesController < ApplicationController
   end
 
   def find_department
-    employees = Employee.includes(:department).where(departments: { name: params[:filter] })
-    render json: employees, each_serializer: EmployeeSerializer
+    department = Department.find_by(name:params[:filter])
+
+    if department.present?
+      employees = department.employees.includes(:designation)
+      render json: employees, each_serializer: EmployeeSerializer, include: [:designation]
+    else
+      render json: { error: 'Department not found' }, status: :not_found
+    end
   end
   
   private
   
   def employee_params
-    params.require(:employee).permit(:name, :email, :password, :dob, :qualification, :contact, :gender, :department_id)
+    params.require(:employee).permit(:name, :email, :password, :dob, :qualification, :contact, :gender, :department_id, :designation_id)
   end 
 
   def set_employee
