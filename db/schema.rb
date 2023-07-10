@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_10_074001) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_10_103255) do
   create_table "departments", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -44,6 +44,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_074001) do
     t.index ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true
   end
 
+  create_table "personal_infos", force: :cascade do |t|
+    t.string "father_name"
+    t.string "mother_name"
+    t.date "dob"
+    t.string "personal_contact"
+    t.string "emergency_contact"
+    t.string "blood_group"
+    t.string "present_address"
+    t.string "permanent_address"
+    t.integer "employee_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_personal_infos_on_employee_id"
+  end
+
   add_foreign_key "employees", "departments"
   add_foreign_key "employees", "designations"
+  add_foreign_key "personal_infos", "employees"
 end
