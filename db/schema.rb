@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_10_103255) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_10_123037) do
   create_table "departments", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -44,6 +44,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_103255) do
     t.index ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true
   end
 
+  create_table "employees_tasks", force: :cascade do |t|
+    t.integer "task_id", null: false
+    t.integer "employee_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_employees_tasks_on_employee_id"
+    t.index ["task_id"], name: "index_employees_tasks_on_task_id"
+  end
+
   create_table "personal_infos", force: :cascade do |t|
     t.string "father_name"
     t.string "mother_name"
@@ -59,7 +68,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_103255) do
     t.index ["employee_id"], name: "index_personal_infos_on_employee_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.date "start_date"
+    t.date "due_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "employees", "departments"
   add_foreign_key "employees", "designations"
+  add_foreign_key "employees_tasks", "employees"
+  add_foreign_key "employees_tasks", "tasks"
   add_foreign_key "personal_infos", "employees"
 end
