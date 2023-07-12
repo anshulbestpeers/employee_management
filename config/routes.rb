@@ -12,5 +12,10 @@ Rails.application.routes.draw do
     resources :personal_infos
     resources :tasks
     resources :attendances
+    resources :leaves do
+      collection do
+        get 'find_leaves'
+      end
+    end
   end
 end

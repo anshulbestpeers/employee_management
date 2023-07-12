@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_12_093753) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_12_095419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,15 +67,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_093753) do
   end
 
   create_table "leaves", force: :cascade do |t|
-    t.integer "leave_type"
+    t.integer "leave_type", default: 0
     t.date "from_date"
-    t.integer "from_session"
+    t.integer "from_session", default: 0
     t.date "to_date"
-    t.integer "to_session"
+    t.integer "to_session", default: 0
     t.string "mail_to"
     t.string "reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "employee_id", null: false
+    t.integer "status", default: 0
+    t.index ["employee_id"], name: "index_leaves_on_employee_id"
   end
 
   create_table "personal_infos", force: :cascade do |t|
@@ -108,5 +111,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_093753) do
   add_foreign_key "employees", "designations"
   add_foreign_key "employees_tasks", "employees"
   add_foreign_key "employees_tasks", "tasks"
+  add_foreign_key "leaves", "employees"
   add_foreign_key "personal_infos", "employees"
 end
