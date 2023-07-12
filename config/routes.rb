@@ -11,5 +11,6 @@ Rails.application.routes.draw do
     end
     resources :personal_info
     resources :tasks
+    resources :attendances
   end
 end

@@ -37,7 +37,6 @@ class EmployeesController < ApplicationController
 
   def find_department
     department = Department.find_by(name:params[:filter])
-
     if department.present?
       employees = department.employees.includes(:designation)
       render json: employees, each_serializer: EmployeeSerializer, include: [:designation]
