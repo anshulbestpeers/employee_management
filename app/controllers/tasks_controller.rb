@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :update, :destroy]
-  before_action :set_employee, only: [:create]
+  before_action :set_employee, only: [:index, :create]
+  
   def index
-    tasks = Task.all
+    tasks = @employee.tasks.all
     render json: tasks.to_json
   end
 
@@ -12,6 +13,7 @@ class TasksController < ApplicationController
 
   def create
     task = @employee.tasks.create(task_params)
+
     if task
       render json: task.to_json, status: :created
     else
@@ -20,6 +22,7 @@ class TasksController < ApplicationController
   end
 
   def update
+
     if @task.update(task_params)
       render json: @task.to_json
     else
@@ -28,6 +31,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
+
     if @task.destroy 
       head :no_content
     else

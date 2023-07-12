@@ -1,8 +1,13 @@
 class PersonalInfosController < ApplicationController
   before_action :set_employee
 
+  def show
+    render json: @employee.personal_info.to_json
+  end
+
   def create
     personal_info = @employee.build_personal_info(p_info_params)
+
     if personal_info.save
       render json: personal_info.to_json, status: :created
     else
@@ -10,13 +15,9 @@ class PersonalInfosController < ApplicationController
     end
   end
 
-  def show
-    render json: @employee.personal_info.to_json
-  end
-
-
   def update
     personal_info = @employee.personal_info
+
     if personal_info.update(p_info_params)
       render json: personal_info.to_json
     else
@@ -25,6 +26,7 @@ class PersonalInfosController < ApplicationController
   end
 
   def destroy
+
     if @employee.personal_info.destroy
       head :no_content
     else
