@@ -26,7 +26,7 @@ class PersonalInfosController < ApplicationController
   end
 
   def destroy
-    
+
     if @employee.personal_info.destroy
       head :no_content
     else
