@@ -12,5 +12,13 @@ Rails.application.routes.draw do
     resources :personal_infos
     resources :tasks
     resources :attendances
+    resources :leaves do
+      collection do
+        get 'applied_leaves'
+      end
+      member do
+        patch 'approved_leave'
+      end
+    end
   end
 end

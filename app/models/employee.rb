@@ -8,4 +8,5 @@ class Employee < ApplicationRecord
   has_one :personal_info
   has_and_belongs_to_many :tasks
   has_many :attendances
+  has_many :leaves
 end
