@@ -14,7 +14,10 @@ Rails.application.routes.draw do
     resources :attendances
     resources :leaves do
       collection do
-        get 'find_leaves'
+        get 'applied_leaves'
+      end
+      member do
+        patch 'approved_leave'
       end
     end
   end

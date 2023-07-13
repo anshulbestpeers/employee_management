@@ -1,5 +1,5 @@
 class LeavesController < ApplicationController
-  before_action :set_employee, only: [:index, :create, :find_leaves]
+  before_action :set_employee, only: [:index, :create, :find_leaves, :approved_leave]
   before_action :set_leave, only: [:show, :update, :destroy]
 
   def index
@@ -36,10 +36,23 @@ class LeavesController < ApplicationController
     end
   end
   
-  def find_leaves
+  def applied_leaves
     leaves = Leave.where(mail_to: @employee.email)
     render json: leaves.to_json
   end
+
+  def approved_leave
+    leave = Leave.find_by(mail_to: @employee.email, id: params[:id])
+    if leave
+      if leave.update(status: params[:status])
+        render json: { leave: leave }
+      else
+        render json: @leave.errors.messages, status: :unprocessable_entity
+      end
+    else
+      render :json => {:message => "Leave not exist!"}
+    end
+  end      
 
   private
 
@@ -52,6 +65,6 @@ class LeavesController < ApplicationController
   end
 
   def leave_params
-    params.require(:leave).permit(:leave_type, :from_date, :from_session, :to_date, :to_session, :mail_to, :reason, :status)
+    params.require(:leave).permit(:leave_type, :from_date, :from_session, :to_date, :to_session, :mail_to, :reason)
   end
 end
