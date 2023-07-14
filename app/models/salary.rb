@@ -1,6 +1,9 @@
 class Salary < ApplicationRecord
   belongs_to :employee
   before_create :calculate_monthly_income
+  before_create :set_month
+
+  private
 
   def calculate_monthly_income
     self.monthly_income = self.yearly_package / 12
@@ -20,5 +23,9 @@ class Salary < ApplicationRecord
     end
     self.total_leaves = total_days
     total_days*self.monthly_income / 30
+  end
+
+  def set_month
+    self.month = Date.today.prev_month.strftime("%B")
   end
 end

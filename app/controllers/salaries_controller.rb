@@ -2,8 +2,8 @@ class SalariesController < ApplicationController
   before_action :set_employee
 
   def index 
-    salary = @employee.salaries
-    render json: salary
+    salaries = @employee.salaries
+    render json: salaries
   end
 
   def create
