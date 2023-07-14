@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_12_095419) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_14_103039) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_095419) do
     t.datetime "updated_at", null: false
     t.bigint "employee_id", null: false
     t.integer "status", default: 0
+    t.integer "days"
     t.index ["employee_id"], name: "index_leaves_on_employee_id"
   end
 
@@ -94,6 +95,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_095419) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["employee_id"], name: "index_personal_infos_on_employee_id"
+  end
+
+  create_table "salaries", force: :cascade do |t|
+    t.integer "yearly_package"
+    t.integer "monthly_income"
+    t.integer "net_income"
+    t.bigint "employee_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "total_leaves"
+    t.index ["employee_id"], name: "index_salaries_on_employee_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -113,4 +125,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_095419) do
   add_foreign_key "employees_tasks", "tasks"
   add_foreign_key "leaves", "employees"
   add_foreign_key "personal_infos", "employees"
+  add_foreign_key "salaries", "employees"
 end
