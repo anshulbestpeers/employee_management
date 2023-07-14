@@ -20,5 +20,6 @@ Rails.application.routes.draw do
         patch 'approved_leave'
       end
     end
+    resources :salaries
   end
 end
